@@ -15,8 +15,5 @@ public class DanWebsiteApplication {
 		SpringApplication.run(DanWebsiteApplication.class, args);
 	}
 
-	@GetMapping("/route")
-	public String apiRoot(){
-		return  "hello world";
-	}
+
 }

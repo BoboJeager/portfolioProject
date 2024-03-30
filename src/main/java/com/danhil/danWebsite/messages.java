@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public class messages {
     private String companyUrl;
     private List<String> jobType;
     private Boolean read;
+    @DocumentReference
+    private List<Replies> replies;
 }
