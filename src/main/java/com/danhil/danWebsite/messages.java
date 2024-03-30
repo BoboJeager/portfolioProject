@@ -29,4 +29,18 @@ public class messages {
     private Boolean read;
     @DocumentReference
     private List<Replies> replies;
+
+    public messages(String name, String companyRole, String companyName, String industry, String title, String text, String companyUrl, List<String> jobType, Boolean read, List<Replies> replies){
+        this.name = name;
+        this.companyRole = companyRole;
+        this.companyName = companyName;
+        this.industry = industry;
+        this.title = title;
+        this.text = text;
+        this.companyUrl = companyUrl;
+        this.jobType = jobType;
+        this.read = read;
+        this.replies = replies;
+    }
+
 }
