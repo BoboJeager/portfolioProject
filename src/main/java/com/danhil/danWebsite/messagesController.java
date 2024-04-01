@@ -50,11 +50,9 @@ public class messagesController {
             String text = (String) payload.getOrDefault("text", "");
             String companyUrl = (String) payload.getOrDefault("companyUrl", "");
             List<String> jobType = (List<String>) payload.getOrDefault("jobType", Collections.emptyList());
-            Boolean read = (Boolean) payload.getOrDefault("read", false);
+            boolean read = (boolean) payload.getOrDefault("read", false);
 
-            messages msg = new messages(
-                    name, companyRole, companyName, industry, title, text, companyUrl, jobType, read, null
-            );
+            messages msg = messages.builder().name(name).companyRole(companyRole).companyName(companyName).industry(industry).title(title).text(text).companyUrl(companyUrl).jobType(jobType).read(read).build();
             messages createdMessage = messagesService.createMessage(msg);
             return new ResponseEntity<>(createdMessage, HttpStatus.CREATED);
         } catch (Exception e) {
