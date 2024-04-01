@@ -1,5 +1,6 @@
 package com.danhil.danWebsite;
 
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,4 +21,9 @@ public class messagesService {
         ObjectId mongoId = new ObjectId(id);
         return messagesRepository.findById(mongoId).orElse(null);
     }
+
+    public messages createMessage( messages msg) {
+        return messagesRepository.save(msg);
+    }
+
 }
