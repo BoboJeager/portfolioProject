@@ -59,6 +59,18 @@ public class messagesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<messages> patchMessage(@PathVariable("id") String id, @RequestBody Map<String, Object> requestPayload){
+        try{
+            messages patchMessage = messagesService.patchMessage(id, requestPayload);
+            if(patchMessage == null){
+                return new ResponseEntity<>(NOT_FOUND);
+            }
+            return new ResponseEntity<>(patchMessage, OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }
