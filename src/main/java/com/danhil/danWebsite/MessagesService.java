@@ -10,25 +10,25 @@ import java.util.Map;
 
 @Service
 public class MessagesService {
-    //intantiates the class foor us
+    //instantiates the class for us
     @Autowired
     private MessagesRepository MessagesRepository;
-    public List<Messages> AllMessages(){
+    public List<messages> AllMessages(){
         return MessagesRepository.findAll();
     }
 
-    public Messages Message(String id){
+    public messages Message(String id){
         ObjectId mongoId = new ObjectId(id);
         return MessagesRepository.findById(mongoId).orElse(null);
     }
 
-    public Messages CreateMessage( Messages msg) {
+    public messages CreateMessage( messages msg) {
         return MessagesRepository.save(msg);
     }
 
-    public Messages PatchMessage(String id, Map<String, Object> patchPayload){
+    public messages PatchMessage(String id, Map<String, Object> patchPayload){
         ObjectId msgId = new ObjectId(id);
-        Messages msg = MessagesRepository.findById(msgId).orElse(null);
+        messages msg = MessagesRepository.findById(msgId).orElse(null);
         if (msg == null){
             return null;
         }
@@ -37,7 +37,7 @@ public class MessagesService {
             Object value = entry.getValue();
 
             try {
-                Field field = Messages.class.getDeclaredField(fieldName);
+                Field field = messages.class.getDeclaredField(fieldName);
                 field.setAccessible(true);
                 field.set(msg, value);
             } catch (NoSuchFieldException | IllegalAccessException e) {

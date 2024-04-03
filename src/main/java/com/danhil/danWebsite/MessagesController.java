@@ -18,26 +18,26 @@ public class MessagesController {
     @Autowired
     private MessagesService MessagesService;
     @GetMapping
-    public ResponseEntity<List<Messages>> allMessages (){
-           List<Messages> allMessages = MessagesService.AllMessages();
+    public ResponseEntity<List<messages>> AllMessages (){
+           List<messages> allMessages = MessagesService.AllMessages();
            if(allMessages.isEmpty()){
                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
            }
-        return new ResponseEntity<List<Messages>>(MessagesService.AllMessages(), HttpStatus.OK);
+        return new ResponseEntity<List<messages>>(MessagesService.AllMessages(), HttpStatus.OK);
     }
 
     //This is how you set /api/v1/messages
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Messages> getMessage(@PathVariable("id") String id){
-            Messages message = MessagesService.Message(id);
+    public ResponseEntity<messages> GetMessage(@PathVariable("id") String id){
+        messages message = MessagesService.Message(id);
             if(message == null){
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<Messages>(message,HttpStatus.OK);
+            return new ResponseEntity<messages>(message,HttpStatus.OK);
     }
     //Post api for creating messages
     @PostMapping
-    public ResponseEntity<Messages> CreateMessage(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<messages> CreateMessage(@RequestBody Map<String, Object> payload) {
         try {
             String name = (String) payload.getOrDefault("name", "");
             String companyRole = (String) payload.getOrDefault("companyRole", "");
@@ -49,17 +49,17 @@ public class MessagesController {
             List<String> jobType = (List<String>) payload.getOrDefault("jobType", Collections.emptyList());
             boolean read = (boolean) payload.getOrDefault("read", false);
 
-            Messages msg = Messages.builder().name(name).companyRole(companyRole).companyName(companyName).industry(industry).title(title).text(text).companyUrl(companyUrl).jobType(jobType).read(read).build();
-            Messages createdMessage = MessagesService.CreateMessage(msg);
+            messages msg = messages.builder().name(name).companyRole(companyRole).companyName(companyName).industry(industry).title(title).text(text).companyUrl(companyUrl).jobType(jobType).read(read).build();
+            messages createdMessage = MessagesService.CreateMessage(msg);
             return new ResponseEntity<>(createdMessage, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<Messages> PatchMessage(@PathVariable("id") String id, @RequestBody Map<String, Object> requestPayload){
+    public ResponseEntity<messages> PatchMessage(@PathVariable("id") String id, @RequestBody Map<String, Object> requestPayload){
         try{
-            Messages patchMessage = MessagesService.PatchMessage(id, requestPayload);
+            messages patchMessage = MessagesService.PatchMessage(id, requestPayload);
             if(patchMessage == null){
                 return new ResponseEntity<>(NOT_FOUND);
             }

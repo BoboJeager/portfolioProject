@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Messages {
+public class messages {
     @Id
     private ObjectId id;
     private String name;
