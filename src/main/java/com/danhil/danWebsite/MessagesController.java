@@ -1,10 +1,7 @@
 package com.danhil.danWebsite;
 
-import org.apache.logging.log4j.message.Message;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,30 +14,30 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/messages")
-public class messagesController {
+public class MessagesController {
     @Autowired
-    private messagesService messagesService;
+    private MessagesService MessagesService;
     @GetMapping
-    public ResponseEntity<List<messages>> allMessages (){
-           List<messages> allMessages = messagesService.AllMessages();
+    public ResponseEntity<List<Messages>> allMessages (){
+           List<Messages> allMessages = MessagesService.AllMessages();
            if(allMessages.isEmpty()){
                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
            }
-        return new ResponseEntity<List<messages>>(messagesService.AllMessages(), HttpStatus.OK);
+        return new ResponseEntity<List<Messages>>(MessagesService.AllMessages(), HttpStatus.OK);
     }
 
     //This is how you set /api/v1/messages
     @GetMapping(value = "/{id}")
-    public ResponseEntity<messages> getMessage(@PathVariable("id") String id){
-            messages message = messagesService.message(id);
+    public ResponseEntity<Messages> getMessage(@PathVariable("id") String id){
+            Messages message = MessagesService.Message(id);
             if(message == null){
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<messages>(message,HttpStatus.OK);
+            return new ResponseEntity<Messages>(message,HttpStatus.OK);
     }
     //Post api for creating messages
     @PostMapping
-    public ResponseEntity<messages> CreateMessage(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<Messages> CreateMessage(@RequestBody Map<String, Object> payload) {
         try {
             String name = (String) payload.getOrDefault("name", "");
             String companyRole = (String) payload.getOrDefault("companyRole", "");
@@ -52,17 +49,17 @@ public class messagesController {
             List<String> jobType = (List<String>) payload.getOrDefault("jobType", Collections.emptyList());
             boolean read = (boolean) payload.getOrDefault("read", false);
 
-            messages msg = messages.builder().name(name).companyRole(companyRole).companyName(companyName).industry(industry).title(title).text(text).companyUrl(companyUrl).jobType(jobType).read(read).build();
-            messages createdMessage = messagesService.CreateMessage(msg);
+            Messages msg = Messages.builder().name(name).companyRole(companyRole).companyName(companyName).industry(industry).title(title).text(text).companyUrl(companyUrl).jobType(jobType).read(read).build();
+            Messages createdMessage = MessagesService.CreateMessage(msg);
             return new ResponseEntity<>(createdMessage, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<messages> PatchMessage(@PathVariable("id") String id, @RequestBody Map<String, Object> requestPayload){
+    public ResponseEntity<Messages> PatchMessage(@PathVariable("id") String id, @RequestBody Map<String, Object> requestPayload){
         try{
-            messages patchMessage = messagesService.PatchMessage(id, requestPayload);
+            Messages patchMessage = MessagesService.PatchMessage(id, requestPayload);
             if(patchMessage == null){
                 return new ResponseEntity<>(NOT_FOUND);
             }

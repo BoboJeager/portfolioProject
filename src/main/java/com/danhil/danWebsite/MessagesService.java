@@ -1,37 +1,34 @@
 package com.danhil.danWebsite;
 
-import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
-import java.security.Key;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class messagesService {
+public class MessagesService {
     //intantiates the class foor us
     @Autowired
-    private messagesRepository messagesRepository;
-    public List<messages> AllMessages(){
-        return messagesRepository.findAll();
+    private MessagesRepository MessagesRepository;
+    public List<Messages> AllMessages(){
+        return MessagesRepository.findAll();
     }
 
-    public messages message(String id){
+    public Messages Message(String id){
         ObjectId mongoId = new ObjectId(id);
-        return messagesRepository.findById(mongoId).orElse(null);
+        return MessagesRepository.findById(mongoId).orElse(null);
     }
 
-    public messages CreateMessage( messages msg) {
-        return messagesRepository.save(msg);
+    public Messages CreateMessage( Messages msg) {
+        return MessagesRepository.save(msg);
     }
 
-    public messages PatchMessage(String id, Map<String, Object> patchPayload){
+    public Messages PatchMessage(String id, Map<String, Object> patchPayload){
         ObjectId msgId = new ObjectId(id);
-        messages msg = messagesRepository.findById(msgId).orElse(null);
+        Messages msg = MessagesRepository.findById(msgId).orElse(null);
         if (msg == null){
             return null;
         }
@@ -40,14 +37,14 @@ public class messagesService {
             Object value = entry.getValue();
 
             try {
-                Field field = messages.class.getDeclaredField(fieldName);
+                Field field = Messages.class.getDeclaredField(fieldName);
                 field.setAccessible(true);
                 field.set(msg, value);
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-            return messagesRepository.save(msg);
+            return MessagesRepository.save(msg);
         }
     }
 
