@@ -16,7 +16,7 @@ public class messagesService {
     //intantiates the class foor us
     @Autowired
     private messagesRepository messagesRepository;
-    public List<messages> allMessages(){
+    public List<messages> AllMessages(){
         return messagesRepository.findAll();
     }
 
@@ -25,11 +25,11 @@ public class messagesService {
         return messagesRepository.findById(mongoId).orElse(null);
     }
 
-    public messages createMessage( messages msg) {
+    public messages CreateMessage( messages msg) {
         return messagesRepository.save(msg);
     }
 
-    public messages patchMessage(String id, Map<String, Object> patchPayload){
+    public messages PatchMessage(String id, Map<String, Object> patchPayload){
         ObjectId msgId = new ObjectId(id);
         messages msg = messagesRepository.findById(msgId).orElse(null);
         if (msg == null){

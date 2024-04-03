@@ -22,11 +22,11 @@ public class messagesController {
     private messagesService messagesService;
     @GetMapping
     public ResponseEntity<List<messages>> allMessages (){
-           List<messages> allMessages = messagesService.allMessages();
+           List<messages> allMessages = messagesService.AllMessages();
            if(allMessages.isEmpty()){
                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
            }
-        return new ResponseEntity<List<messages>>(messagesService.allMessages(), HttpStatus.OK);
+        return new ResponseEntity<List<messages>>(messagesService.AllMessages(), HttpStatus.OK);
     }
 
     //This is how you set /api/v1/messages
@@ -40,7 +40,7 @@ public class messagesController {
     }
     //Post api for creating messages
     @PostMapping
-    public ResponseEntity<messages> createMessage(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<messages> CreateMessage(@RequestBody Map<String, Object> payload) {
         try {
             String name = (String) payload.getOrDefault("name", "");
             String companyRole = (String) payload.getOrDefault("companyRole", "");
@@ -53,16 +53,16 @@ public class messagesController {
             boolean read = (boolean) payload.getOrDefault("read", false);
 
             messages msg = messages.builder().name(name).companyRole(companyRole).companyName(companyName).industry(industry).title(title).text(text).companyUrl(companyUrl).jobType(jobType).read(read).build();
-            messages createdMessage = messagesService.createMessage(msg);
+            messages createdMessage = messagesService.CreateMessage(msg);
             return new ResponseEntity<>(createdMessage, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<messages> patchMessage(@PathVariable("id") String id, @RequestBody Map<String, Object> requestPayload){
+    public ResponseEntity<messages> PatchMessage(@PathVariable("id") String id, @RequestBody Map<String, Object> requestPayload){
         try{
-            messages patchMessage = messagesService.patchMessage(id, requestPayload);
+            messages patchMessage = messagesService.PatchMessage(id, requestPayload);
             if(patchMessage == null){
                 return new ResponseEntity<>(NOT_FOUND);
             }
