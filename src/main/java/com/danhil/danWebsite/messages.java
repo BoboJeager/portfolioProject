@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.List;
 
-@Document(collection = "messages")
+@Document(collection = "Messages")
 //lets lombok take care of getters and setters
 @Data
 @AllArgsConstructor
